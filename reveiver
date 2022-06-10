@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/shm.h>
+#include <string.h>
+#include<ctype.h>
+
+char receiver(int key) {
+    void *shared_memory;
+    char buff[100];
+    int shmid;
+
+    shmid = shmget((key_t) key, 1024, 0666);
+    shared_memory = shmat(shmid, NULL, 0);
+    printf((char *)shared_memory);
+    char * tekst;
+    tekst = shared_memory;
+
+    return tekst;
+}
+
+int main() {
+
+
+
+    char * a;
+    a = receiver(1122);
+    printf(*a);
+
+    return 0;
+}
