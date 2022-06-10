@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/shm.h>
+#include <string.h>
+
+
+int main() {
+    void *shared_memory1;
+    void *shared_memory2;
+    char buff1[100];
+    char buff2[100];
+    int shmid1;
+    int shmid2;
+
+  /* pierwszy wyraz */
+    shmid1 = shmget((key_t)1122, 1024, 0666|IPC_CREAT);
+    shared_memory1 = shmat(shmid1, NULL, 0);
+    read(0,buff1,100);
+    strcpy(shared_memory1,buff1);
+/* drugi wyraz */
+    shmid2 = shmget((key_t)1123, 1024, 0666|IPC_CREAT);
+    shared_memory2 = shmat(shmid2, NULL, 0);
+    read(0,buff2,100);
+    strcpy(shared_memory2,buff2);
+
+
+
+}
